@@ -186,58 +186,62 @@ with main_col:
         #     ax_fare.set_ylabel("Passenger Count")
         
         #     st.pyplot(fig_fare)
-        with col1:
-            st.markdown("**📊 Age Distribution by Survival**")
-            fig_age, ax_age = plt.subplots(figsize=(5, 4))
-            
-            sns.histplot(data=df, x='Age', hue='Survived', multiple='stack', ax=ax_age)
-        
-            # Extract the handles and labels
-            handles, labels = ax_age.get_legend_handles_labels()
-            label_map = {'0': 'Not Survived', '1': 'Survived'}
-            new_labels = [label_map.get(lbl, lbl) for lbl in labels]
-        
-            ax_age.legend(handles=handles, title="Survival Status", labels=new_labels)
-        
-            ax_age.set_title("Age Distribution by Survival")
-            ax_age.set_xlabel("Age")
-            ax_age.set_ylabel("Passenger Count")
-        
-            st.pyplot(fig_age)
-
-        with col2:
-            st.markdown("**💵 Fare Distribution by Class**")
-            fig_fare, ax_fare = plt.subplots(figsize=(5, 4))
-        
-            sns.histplot(
-                data=df,
-                x='Fare',
-                hue='Pclass',
-                multiple='stack',
-                ax=ax_fare,
-                palette={1: 'blue', 2: 'orange', 3: 'green'}  # enforce color mapping explicitly
-            )
-        
-            # Extract actual legend handles and labels, then map them
-            handles, labels = ax_fare.get_legend_handles_labels()
-            label_map = {'1': '1st Class', '2': '2nd Class', '3': '3rd Class'}
-            new_labels = [label_map.get(lbl, lbl) for lbl in labels]
-        
-            ax_fare.legend(handles=handles, title="Passenger Class", labels=new_labels)
-        
-            ax_fare.set_title("Fare Distribution by Class")
-            ax_fare.set_xlabel("Fare")
-            ax_fare.set_ylabel("Passenger Count")
-        
-            st.pyplot(fig_fare)
-
-        with col3:
-            st.markdown("**📌 Correlation Heatmap**")
-            fig_corr, ax_corr = plt.subplots(figsize=(4, 4))
-            corr_matrix = df.select_dtypes(include=[np.number]).corr()
-            sns.heatmap(corr_matrix.round(2), annot=True, cmap='coolwarm', ax=ax_corr, cbar=False)
-            ax_corr.set_title("Correlations")
-            st.pyplot(fig_corr)  
+    with tab1:
+        st.subheader("Survival Count")
+        fig, ax = plt.subplots()
+        sns.countplot(data=df, x='Survived_label', palette='Set2', ax=ax)
+        ax.set_title("Survival Distribution")
+        ax.set_xlabel("Survived")
+        ax.set_ylabel("Number of Passengers")
+        st.pyplot(fig)
+    
+        st.subheader("Survival by Passenger Class")
+        fig, ax = plt.subplots()
+        sns.countplot(data=df, x='Pclass_label', hue='Survived_label', palette='Set1', ax=ax)
+        ax.set_title("Survival by Ticket Class")
+        ax.set_xlabel("Ticket Class")
+        ax.set_ylabel("Number of Passengers")
+        ax.legend(title="Survived")
+        st.pyplot(fig)
+    
+        st.subheader("Age Distribution by Survival")
+        fig, ax = plt.subplots()
+        sns.histplot(data=df, x='Age', hue='Survived_label', multiple='stack', palette='Set2', kde=True, ax=ax)
+        ax.set_title("Age Distribution of Survivors vs Non-survivors")
+        ax.set_xlabel("Age")
+        ax.set_ylabel("Passenger Count")
+        ax.legend(title="Survived")
+        st.pyplot(fig)
+    
+        st.subheader("Fare Distribution by Survival")
+        fig, ax = plt.subplots()
+        sns.histplot(data=df, x='Fare', hue='Survived_label', multiple='stack', palette='Set3', kde=True, ax=ax)
+        ax.set_title("Fare Distribution of Survivors vs Non-survivors")
+        ax.set_xlabel("Fare")
+        ax.set_xlim(0, 300)  # Limit to reduce impact of extreme outliers
+        ax.set_ylabel("Passenger Count")
+        ax.legend(title="Survived")
+        st.pyplot(fig)
+    
+        st.subheader("Survival by Gender")
+        fig, ax = plt.subplots()
+        sns.countplot(data=df, x='Sex', hue='Survived_label', palette='Set1', ax=ax)
+        ax.set_title("Survival by Gender")
+        ax.set_xlabel("Gender (0 = Male, 1 = Female)")
+        ax.set_ylabel("Number of Passengers")
+        ax.legend(title="Survived")
+        st.pyplot(fig)
+    
+        st.subheader("Survival by Embarkation Port")
+        df['Embarked_label'] = df['Embarked'].map({'C': 'Cherbourg', 'Q': 'Queenstown', 'S': 'Southampton'})
+        fig, ax = plt.subplots()
+        sns.countplot(data=df, x='Embarked_label', hue='Survived_label', palette='Set2', ax=ax)
+        ax.set_title("Survival by Port of Embarkation")
+        ax.set_xlabel("Port")
+        ax.set_ylabel("Number of Passengers")
+        ax.legend(title="Survived")
+        st.pyplot(fig)
+ 
 
     # --- TAB 2: Filters & Charts ---
     with tab2:
