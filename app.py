@@ -74,8 +74,10 @@ with main_col:
         ]
 
         st.subheader("🔍 Filtered Data Preview")
-        st.dataframe(filtered_df.head())
-
+        # st.dataframe(filtered_df.head())
+        columns_to_hide = filtered_df.columns[[10, 11]]
+        st.dataframe(filtered_df.drop(columns=columns_to_hide).head())
+        
         st.metric("Filtered Survival Rate", f"{filtered_df['Survived'].mean():.2%}")
 
         st.subheader("📊 Filtered Survival Charts")
@@ -151,16 +153,16 @@ with main_col:
     with tab4:
         st.header("📚 Titanic Dataset Dictionary")
         data_dict = {
-            "survival": ["Survival", "0 = No, 1 = Yes"],
-            "pclass": ["Ticket class", "1 = 1st, 2 = 2nd, 3 = 3rd"],
-            "sex": ["Sex", "0 = Male, 1 = Female"],
+            "Survived": ["Survived", "0 = No, 1 = Yes"],
+            "Pclass": ["Ticket class", "1 = 1st, 2 = 2nd, 3 = 3rd"],
+            "Sex": ["Sex", "0 = Male, 1 = Female"],
             "Age": ["Age in years", ""],
-            "sibsp": ["# of siblings / spouses aboard the Titanic", ""],
-            "parch": ["# of parents / children aboard the Titanic", ""],
-            "ticket": ["Ticket number", ""],
-            "fare": ["Passenger fare", ""],
-            "cabin": ["Cabin number", ""],
-            "embarked": ["Port of Embarkation", "C = Cherbourg, Q = Queenstown, S = Southampton"]
+            "Sibsp": ["# of siblings / spouses aboard the Titanic", ""],
+            "Parch": ["# of parents / children aboard the Titanic", ""],
+            "Ticket": ["Ticket number", ""],
+            "Fare": ["Passenger fare", ""],
+            "Cabin": ["Cabin number", ""],
+            "Embarked": ["Port of Embarkation", "C = Cherbourg, Q = Queenstown, S = Southampton"]
         }
         dict_df = pd.DataFrame.from_dict(data_dict, orient='index', columns=["Definition", "Key"])
         dict_df.index.name = "Variable"
