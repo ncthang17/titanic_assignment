@@ -187,7 +187,7 @@ with main_col:
             ax2.set_xticklabels(['Male', 'Female'])
             ax2.legend(title="Survived", labels=["No", "Yes"])
             st.pyplot(fig2)
-         with col3:
+        with col3:
             st.markdown("**🎟️ Survival by Passenger Class (Filtered)**")
             fig3, ax3 = plt.subplots()
             sns.countplot(data=filtered_df, x='Pclass', hue='Survived', order=[1, 2, 3], palette={0: "#1f77b4", 1: "#ff7f0e"}, ax=ax3)
