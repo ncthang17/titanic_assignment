@@ -38,14 +38,61 @@ models = {
 main_col, side_col = st.columns([4, 1])
 
 with main_col:
-    tab1, tab2, tab3, tab4 = st.tabs([
-        "📈 Data Insights", "🔍 Filters & Charts", "🔮 Prediction", "📚 Data Dictionary"
+    # tab1, tab2, tab3, tab4 = st.tabs([
+    #     "📈 Data Insights", "🔍 Filters & Charts", "🔮 Prediction", "📚 Data Dictionary"
+    # ])
+    tab0, tab1, tab2, tab3, tab4 = st.tabs([
+        "🏠 Home", "📈 Data Insights", "🔍 Filters & Charts", "🔮 Prediction", "📚 Data Dictionary"
     ])
+    
+    with tab0:
+        st.header("🚢 Welcome to the Titanic Survival Dashboard")
+        
+        st.markdown("""
+        This interactive dashboard explores survival data from the famous Titanic disaster.  
+        The dataset used for analysis is the `train.csv` file from the Kaggle Titanic competition:
+        
+        👉 [Kaggle Titanic Dataset Overview](https://www.kaggle.com/competitions/titanic/overview)
+    
+        ### 🔍 Data Preprocessing
+        - Only rows with **non-null values** for the `Age` and `Embarked` columns are used to simplify analysis.
+        - Categorical variables (like Sex and Pclass) are encoded for modeling purposes.
+    
+        ### 🧭 Tab Guide
+    
+        - **📈 Data Insights**: Get an overview of the dataset with statistics, distributions, and correlations.
+        - **🔍 Filters & Charts**: Use filters to explore survival trends by gender, class, and age dynamically.
+        - **🔮 Prediction**: Simulate survival prediction based on inputs using various machine learning models.
+        - **📚 Data Dictionary**: Understand the variables used in the dataset and what they mean.
+    
+        ---  
+    
+        We hope this dashboard helps you uncover interesting insights.  
+        Enjoy your journey!  
+        **— Nguyen Chien Thang**
+        """)
 
     # --- TAB 1: Data Insights ---
+    # with tab1:
+    #     st.header("🧠 Dataset Overview and Correlations")
+
+    #     st.subheader("📋 Descriptive Statistics")
+    #     desc_stats = {
+    #         "Total Passengers": df.shape[0],
+    #         "Average Age": round(df['Age'].mean(), 2),
+    #         "Average Fare": round(df['Fare'].mean(), 2),
+    #         "Male Passengers": df[df['Sex'] == 0].shape[0],
+    #         "Female Passengers": df[df['Sex'] == 1].shape[0],
+    #         "1st Class Passengers": df[df['Pclass'] == 1].shape[0],
+    #         "2nd Class Passengers": df[df['Pclass'] == 2].shape[0],
+    #         "3rd Class Passengers": df[df['Pclass'] == 3].shape[0]
+    #     }
+    #     st.dataframe(pd.DataFrame.from_dict(desc_stats, orient='index', columns=["Value"]))
+# --- TAB 1: Data Insights ---
     with tab1:
         st.header("🧠 Dataset Overview and Correlations")
-
+    
+        # Summary statistics
         st.subheader("📋 Descriptive Statistics")
         desc_stats = {
             "Total Passengers": df.shape[0],
@@ -58,6 +105,39 @@ with main_col:
             "3rd Class Passengers": df[df['Pclass'] == 3].shape[0]
         }
         st.dataframe(pd.DataFrame.from_dict(desc_stats, orient='index', columns=["Value"]))
+    
+        # Row 1: Age and Fare Distribution
+        st.subheader("📊 Distributions")
+        col1, col2 = st.columns(2)
+    
+        with col1:
+            fig_age, ax_age = plt.subplots()
+            sns.histplot(df['Age'], bins=30, kde=True, ax=ax_age)
+            ax_age.set_title("Age Distribution")
+            st.pyplot(fig_age)
+    
+        with col2:
+            fig_fare, ax_fare = plt.subplots()
+            sns.histplot(np.log1p(df['Fare']), bins=30, kde=True, ax=ax_fare)
+            ax_fare.set_title("Log Fare Distribution")
+            st.pyplot(fig_fare)
+    
+        # Row 2: Scatterplot and Correlation Heatmap
+        st.subheader("📈 Relationships and Correlations")
+        col3, col4 = st.columns(2)
+    
+        with col3:
+            fig_scatter, ax_scatter = plt.subplots()
+            sns.scatterplot(data=df, x='Age', y='Fare', hue='Survived_label', ax=ax_scatter)
+            ax_scatter.set_title("Age vs Fare (Colored by Survival)")
+            st.pyplot(fig_scatter)
+    
+        with col4:
+            corr_matrix = df[["Pclass", "Sex", "Age", "SibSp", "Parch", "Fare", "Survived"]].corr()
+            fig_corr, ax_corr = plt.subplots()
+            sns.heatmap(corr_matrix, annot=True, cmap="coolwarm", fmt=".2f", ax=ax_corr)
+            ax_corr.set_title("Feature Correlation Heatmap")
+            st.pyplot(fig_corr)
 
     # --- TAB 2: Filters & Charts ---
     with tab2:
