@@ -61,36 +61,77 @@ with main_col:
 
         col1, col2, col3 = st.columns(3)
         
+        # with col1:
+        #     st.markdown("**📊 Age Distribution by Survival**")
+        #     fig_age, ax_age = plt.subplots(figsize=(4, 4))
+        #     sns.histplot(data=df, x='Age', hue='Survived_label',
+        #                  hue_order=['No', 'Yes'], multiple='stack', ax=ax_age)
+        #     ax_age.set_title("Age Distribution by Survival")
+        #     ax_age.set_xlabel("Age")
+        #     ax_age.set_ylabel("Passenger Count")
+        #     ax_age.legend(title="Survived")
+        #     st.pyplot(fig_age)
         with col1:
             st.markdown("**📊 Age Distribution by Survival**")
-            fig_age, ax_age = plt.subplots(figsize=(4, 4))
-            sns.histplot(data=df, x='Age', hue='Survived_label',
-                         hue_order=['No', 'Yes'], multiple='stack', ax=ax_age)
+            fig_age, ax_age = plt.subplots(figsize=(5, 4))
+            
+            # Use raw Survived values for hue and map legend labels manually
+            sns.histplot(data=df, x='Age', hue='Survived', multiple='stack', ax=ax_age)
+        
+            # Manually set legend labels
+            legend_labels = ['Not Survived', 'Survived']
+            handles = ax_age.get_legend().legendHandles
+            ax_age.legend(handles=handles, title="Survival Status", labels=legend_labels)
+        
             ax_age.set_title("Age Distribution by Survival")
             ax_age.set_xlabel("Age")
             ax_age.set_ylabel("Passenger Count")
-            ax_age.legend(title="Survived")
+        
             st.pyplot(fig_age)
 
+        # with col2:
+        #     st.markdown("**💵 Fare Distribution by Class**")
+        #     fig_fare, ax_fare = plt.subplots(figsize=(4, 4))
+            
+        #     sns.histplot(
+        #         data=df,
+        #         x='Fare',
+        #         hue='Pclass_label',
+        #         hue_order=['1st', '2nd', '3rd'],
+        #         multiple='stack',
+        #         ax=ax_fare,
+        #         palette={'1st': 'blue', '2nd': 'orange', '3rd': 'green'}  # optional
+        #     )
+            
+        #     ax_fare.set_title("Fare Distribution by Class")
+        #     ax_fare.set_xlabel("Fare")
+        #     ax_fare.set_ylabel("Passenger Count")
+        #     ax_fare.legend(title="Passenger Class")
+            
+        #     st.pyplot(fig_fare)
         with col2:
             st.markdown("**💵 Fare Distribution by Class**")
-            fig_fare, ax_fare = plt.subplots(figsize=(4, 4))
-            
+            fig_fare, ax_fare = plt.subplots(figsize=(5, 4))
+        
+            # Use raw Pclass values for hue and assign custom colors
             sns.histplot(
                 data=df,
                 x='Fare',
-                hue='Pclass_label',
-                hue_order=['1st', '2nd', '3rd'],
+                hue='Pclass',
                 multiple='stack',
                 ax=ax_fare,
-                palette={'1st': 'blue', '2nd': 'orange', '3rd': 'green'}  # optional
+                palette={1: 'blue', 2: 'orange', 3: 'green'}
             )
-            
+        
+            # Manually set legend labels
+            class_labels = ['1st Class', '2nd Class', '3rd Class']
+            handles = ax_fare.get_legend().legendHandles
+            ax_fare.legend(handles=handles, title="Passenger Class", labels=class_labels)
+        
             ax_fare.set_title("Fare Distribution by Class")
             ax_fare.set_xlabel("Fare")
             ax_fare.set_ylabel("Passenger Count")
-            ax_fare.legend(title="Passenger Class")
-            
+        
             st.pyplot(fig_fare)
 
         with col3:
@@ -146,6 +187,17 @@ with main_col:
             ax2.set_xticklabels(['Male', 'Female'])
             ax2.legend(title="Survived", labels=["No", "Yes"])
             st.pyplot(fig2)
+         with col3:
+            st.markdown("**🎟️ Survival by Passenger Class (Filtered)**")
+            fig3, ax3 = plt.subplots()
+            sns.countplot(data=filtered_df, x='Pclass', hue='Survived', order=[1, 2, 3], palette={0: "#1f77b4", 1: "#ff7f0e"}, ax=ax3)
+            ax3.set_title("Survival by Passenger Class")
+            ax3.set_xlabel("Passenger Class")
+            ax3.set_ylabel("Passenger Count")
+            ax3.set_xticklabels(['1st Class', '2nd Class', '3rd Class'])
+            ax3.legend(title="Survived", labels=["No", "Yes"])
+            st.pyplot(fig3)
+
 
     # --- TAB 3: Prediction ---
     with tab3:
