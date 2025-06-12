@@ -249,9 +249,22 @@ with main_col:
         st.dataframe(dict_df)
 
 # --- RIGHT COLUMN: Static Image ---
+# with side_col:
+#     try:
+#         image = Image.open("IMG_9989.JPG")
+#         st.image(image, caption="Nguyen Chien Thang", use_container_width=True)
+#     except FileNotFoundError:
+#         st.warning("Profile image not found.")
 with side_col:
     try:
-        image = Image.open("IMG_9989.JPG")
-        st.image(image, caption="Nguyen Chien Thang", use_container_width=True)
+        image1 = Image.open("IMG_9989.JPG")
+        st.image(image1, use_container_width=True)
     except FileNotFoundError:
-        st.warning("Profile image not found.")
+        st.warning("Primary profile image not found.")
+
+    try:
+        image2 = Image.open("dan3.2.jpg")  # replace with your second image filename
+        st.image(image2, caption="Nguyen Chien Thang", use_container_width=True)
+    except FileNotFoundError:
+        st.warning("Second image not found.")
+
