@@ -73,14 +73,5 @@ The dashboard updates automatically with filtered data and visualizations.
 - **Pandas** (for data manipulation)
 - **Seaborn & Matplotlib** (for data visualization)
 
----
-
-## Project Structure
-
-titanic-assignment/
-├── app.py # Main Streamlit application
-├── requirements.txt # Titanic passenger dataset
-└── train.csv # Python dependencies
-
 
 
