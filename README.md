@@ -32,14 +32,10 @@ This project provides a dynamic dashboard to analyze survival patterns among Tit
 ## Installation
 
 1. **Clone the repository:**
-git clone https://github.com/ncthang17/titanic-assignment.git
-cd titanic-assignment
 
 2. **Install dependencies:**
-pip install -r requirements.txt
 
 3. **Run the app:**
-streamlit run app.py
 
 ---
 
@@ -80,10 +76,11 @@ The dashboard updates automatically with filtered data and visualizations.
 ---
 
 ## Project Structure
+
 titanic-assignment/
-│
 ├── app.py # Main Streamlit application
-├── train.csv # Titanic passenger dataset
-└── requirements.txt # Python dependencies
+├── requirements.txt # Titanic passenger dataset
+└── train.csv # Python dependencies
+
 
 
