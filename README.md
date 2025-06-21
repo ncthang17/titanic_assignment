@@ -29,17 +29,11 @@ This project provides a dynamic dashboard to analyze survival patterns among Tit
 
 ---
 
-## Screenshots
-
-*Replace with your own screenshots if desired.*
-
----
-
 ## Installation
 
 1. **Clone the repository:**
-git clone https://github.com/your-username/titanic-dashboard.git
-cd titanic-dashboard
+git clone https://github.com/ncthang17/titanic-assignment.git
+cd titanic-assignment
 
 2. **Install dependencies:**
 pip install -r requirements.txt
@@ -86,16 +80,10 @@ The dashboard updates automatically with filtered data and visualizations.
 ---
 
 ## Project Structure
-titanic-dashboard/
+titanic-assignment/
 │
 ├── app.py # Main Streamlit application
 ├── train.csv # Titanic passenger dataset
 └── requirements.txt # Python dependencies
-
----
-
-## License
-
-This project is open source and available under the [MIT License](LICENSE).
 
 
